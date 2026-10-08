@@ -1,0 +1,9 @@
+#Swap-filer
+*.swp
+*.swo
+
+#Undo-filer
+*.un~
+
+#Sessionsfiler
+Session.vim
