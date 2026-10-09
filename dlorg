@@ -1,4 +1,60 @@
 #!/bin/bash
 
-echo "Dlorg script startat!"
+# Defeniera sökvägen till Downloads-mappen
+# $HOME pekar automatiskt på din hemkatalog (t.ex. /home/användarnamn)
+DOWNLOADS_DIR="$HOME/Downloads"
 
+# Steg 1: Skapa målmapparna om de inte redan finns
+# -p flaggan gör att mkdir inte klagar om mappen redan existerar
+mkdir -p "$DOWNLOADS_DIR/images"
+mkdir -p "$DOWNLOADS_DIR/pdfs"
+mkdir -p "$DOWNLOADS_DIR/docs"
+mkdir -p "$DOWNLOADS_DIR/text"
+mkdir -p "$DOWNLOADS_DIR/archives"
+mkdir -p "$DOWNLOADS_DIR/other"
+
+# Steg 2: Loopa igenom alla filer som ligger direkt i Downloads-mappen
+# vi använder 'shopt -s nullglob' så att loopen inte kraschar om mappen är tom
+shopt -s nullglob
+
+for fil in "$DOWNLOADS_DIR"/*; do
+
+    # Kontrollera att det faktiskt är en FIL och inte en av våra mappar
+    if [ -f "$fil" ]; then
+        
+        # Hämta filändelsen och gör om den till små bokstäver (för säkerhetsskull)
+        ext="${fil##*.}"
+        ext=$(echo "$ext" | tr '[:upper:]' '[:lower:]')
+
+        # Sorteringslogik: Matcha filändelse med rätt mapp
+        case "$ext" in
+            jpg|jpeg|png|gif)
+                mv "$fil" "$DOWNLOADS_DIR/images/"
+                echo "Flyttade $(basename "$fil") till images/"
+                ;;
+            pdf)
+                mv "$fil" "$DOWNLOADS_DIR/pdfs/"
+                echo "Flyttade $(basename "$fil") till pdfs/"
+                ;;
+            docx|xlsx|pptx)
+                mv "$fil" "$DOWNLOADS_DIR/docs/"
+                echo "Flyttade $(basename "$fil") till docs/"
+                ;;
+            txt|md)
+                mv "$fil" "$DOWNLOADS_DIR/text/"
+                echo "Flyttade $(basename "$fil") till text/"
+                ;;
+            zip|tar.gz|rar|7z)
+                mv "$fil" "$DOWNLOADS_DIR/archives/"
+                echo "Flyttade $(basename "$fil") till archives/"
+                ;;
+            *)
+                # Om filen saknar ändelse eller inte matchar ovanstående
+                mv "$fil" "$DOWNLOADS_DIR/other/"
+                echo "Flyttade $(basename "$fil") till other/"
+                ;;
+        esac
+    fi
+done
+
+echo "Organiseringen är klar!"
