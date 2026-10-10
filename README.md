@@ -1,8 +1,8 @@
-# dlorg - Downloads Organizer 📁
+# dlorg - Downloads Organizer
 
 `dlorg` är ett smart Bash-skript skapat för att automatiskt städa upp och organisera din `Downloads`-mapp i Linux. Skriptet lyssnar i realtid efter nya filer och sorterar dem direkt i undermappar baserat på deras filändelser.
 
-## Funktioner 🚀
+## Funktioner 
 Skriptet övervakar mappen och sorterar automatiskt filer till följande mappar:
 * **pdfs/** – För PDF-dokument (`.pdf`)
 * **images/** – För bilder (`.jpg`, `.png`, `.gif`, etc.)
@@ -12,7 +12,7 @@ Skriptet övervakar mappen och sorterar automatiskt filer till följande mappar:
 * **archives/** – För komprimerade filer (`.zip`, `.tar`) *(Extra mapp)*
 * **other/** – För alla andra filtyper
 
-## Installation & Förberedelser 🛠️
+## Installation & Förberedelser 
 För att skriptet ska fungerar på Oracle Linux behöver verktyget `inotify-tools` vara installerat via EPEL:
 
 ```bash
@@ -25,7 +25,7 @@ Se till att skriptet har körrättigheter:
 chmod +x dlorg
 ```
 
-## Användning 💻
+## Användning
 Starta skriptet genom att köra följande kommando i din terminal:
 ```bash
 ./dlorg
